@@ -43,7 +43,7 @@ public class Send { // This is the sender
 		input.close();
 		connection.close();
 
-		System.out.println("Connection closed");
+		System.out.println("Connection closed now");
 	}
 
 }
