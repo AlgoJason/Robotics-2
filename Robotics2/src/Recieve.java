@@ -12,31 +12,32 @@ public class Recieve {
 		
 		NXTCommConnector connector = Bluetooth.getNXTCommConnector();
 		System.out.println("Waiting for connection ...");
-		NXTConnection con = connector.waitForConnection(0, NXTConnection.RAW);
+		NXTConnection connection = connector.waitForConnection(0, NXTConnection.RAW);
 		System.out.println("Connected");
-		DataInputStream dis = con.openDataInputStream();
-		DataOutputStream dos = con.openDataOutputStream();
+		
+		DataInputStream input = connection.openDataInputStream();
+		DataOutputStream output = connection.openDataOutputStream();
 		
 		byte[] n = new byte[8];
 		
 		while (true) {
 			try {
-				if (dis.read(n) == -1)
+				if (input.read(n) == -1)
 					break;
 			} catch (EOFException e) {
 				break;
 			}
 			
 			System.out.println("Read " + n[0] + n[1] + n[2] + n[3] + n[4] + n[5] + n[6] + n[7]);
-			dos.write(n);
-			dos.flush();
+			output.write(n);
+			output.flush();
 			
 		}
 		
 		Delay.msDelay(1000);
-		dis.close();
-		dos.close();
-		con.close();
+		input.close();
+		output.close();
+		connection.close();
 
 	}
 
