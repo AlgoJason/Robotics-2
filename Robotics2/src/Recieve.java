@@ -55,6 +55,7 @@ public class Recieve {
 	//assigns values for global variables (connections and input/output)
 	public static void initialize() {
 		connector = Bluetooth.getNXTCommConnector();
+		System.out.println("Waiting for connection");
 		connection = connector.waitForConnection(0, NXTConnection.RAW);
 		input = connection.openDataInputStream();
 		output = connection.openDataOutputStream();

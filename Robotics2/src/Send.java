@@ -1,4 +1,3 @@
-import java.io.DataInputStream;
 import java.io.DataOutputStream;
 
 import lejos.hardware.Bluetooth;
@@ -9,30 +8,19 @@ import lejos.remote.nxt.NXTConnection;
 public class Send {
 	
 	//Connection setup [values assigned in initialize()]
-	public static NXTCommConnector connector;
-	public static NXTConnection connection;
-	
-	//input/output streams [values assigned in initialize()]
-	public static DataInputStream input;
-	public static DataOutputStream output;
+	public static NXTCommConnector connector = Bluetooth.getNXTCommConnector();
+	public static NXTConnection connection = connector.connect("00:16:53:44:66:05", NXTConnection.RAW);
 
 	public static void main(String[] args) throws Exception {
-		
-		initialize();
-		
-		byte[] nums = new byte[1];
-		
-		nums[0] = 5;
-
-		output.write(nums);
+		DataOutputStream output = connection.openDataOutputStream();
+		comm(output);
 		
 		output.close();
-		input.close();
 		connection.close();
 	}
 	
 	//demo code from class
-	public static void demo() throws Exception {
+	public static void demo(DataOutputStream output) throws Exception {
 		System.out.println("Sending data");
 
 		int cnt = 0;
@@ -45,19 +33,24 @@ public class Send {
 				o[i] = (byte) cnt++;
 			output.write(o);
 			output.flush();
-			input.read(r);
 
 			System.out.println("Read: " + r[0] + r[1] + r[2] + r[3] + r[4] + r[5] + r[6] + r[7]);
 		}
 		System.out.println("All data sent");
 	}
 	
-	//assigns values for global variables (connections and input/output)
-	public static void initialize() {
-		connector = Bluetooth.getNXTCommConnector();
-		connection = connector.connect("00:16:53:44:66:05", NXTConnection.RAW);
-		input = connection.openDataInputStream();
+	//function to test output passing
+	public static void comm(DataOutputStream output) throws Exception {
+		
+		System.out.println("before output");
+		while(Button.getButtons() != Button.ID_ESCAPE);
 		output = connection.openDataOutputStream();
+		
+		byte[] nums = new byte[1];
+		nums[0] = 15;
+		
+		output.write(nums);
+		output.flush();
 		
 	}
 
