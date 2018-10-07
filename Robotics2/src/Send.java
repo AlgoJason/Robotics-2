@@ -1,5 +1,4 @@
 import java.io.DataOutputStream;
-import java.io.DataInputStream;
 
 import lejos.hardware.Bluetooth;
 import lejos.hardware.Button;
@@ -15,19 +14,11 @@ public class Send {
 		NXTCommConnector connector = Bluetooth.getNXTCommConnector();
 		NXTConnection connection = connector.connect("00:16:53:44:66:05", NXTConnection.RAW);
 		
-		connector.waitForConnection(0, NXTConnection.RAW);
-		
 		DataOutputStream output = connection.openDataOutputStream();
-		DataInputStream input = connection.openDataInputStream();
 		
-		byte[] nums = new byte[1];
-		nums[0] = 15;
+		comm(output);
 		
-		output.write(nums);
-		output.flush();
-		
-		//comm(output);
-		
+		System.out.println("Press any button to exit program");
 		Button.waitForAnyPress();
 		
 		output.close();
@@ -35,7 +26,6 @@ public class Send {
 	}
 	
 	//demo code from class
-	/*
 	public static void demo(DataOutputStream output) throws Exception {
 		System.out.println("Sending data");
 
@@ -59,17 +49,12 @@ public class Send {
 	
 	public static void comm(DataOutputStream output) throws Exception {
 		
-		System.out.println("before output");
-		while(Button.getButtons() != Button.ID_ESCAPE);
-		//output = connection.openDataOutputStream();
-		
 		byte[] nums = new byte[1];
-		nums[0] = 15;
+		nums[0] = 21;
 		
 		output.write(nums);
 		output.flush();
 		
 	}
-	*/
 
 }
