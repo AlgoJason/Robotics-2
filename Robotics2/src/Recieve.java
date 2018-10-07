@@ -6,7 +6,7 @@ import lejos.remote.nxt.NXTCommConnector;
 import lejos.remote.nxt.NXTConnection;
 import lejos.utility.Delay;
 
-public class TestRecieve {
+public class Recieve {
 
 	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub
