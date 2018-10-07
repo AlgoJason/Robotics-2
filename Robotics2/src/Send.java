@@ -6,20 +6,33 @@ import lejos.hardware.Button;
 import lejos.remote.nxt.NXTCommConnector;
 import lejos.remote.nxt.NXTConnection;
 
-public class Send { // This is the sender
-
-	private static final String EV3 = "00:16:53:44:66:05";
+public class Send {
+	
+	//Connection setup [values assigned in initialize()]
+	public static NXTCommConnector connector;
+	public static NXTConnection connection;
+	
+	//input/output streams [values assigned in initialize()]
+	public static DataInputStream input;
+	public static DataOutputStream output;
 
 	public static void main(String[] args) throws Exception {
 		
-		NXTCommConnector connector = Bluetooth.getNXTCommConnector();
-		System.out.println("Connecting to " + EV3);
-		NXTConnection connection = connector.connect(EV3, NXTConnection.RAW);
-		System.out.println("Connected");
+		initialize();
+		
+		byte[] nums = new byte[1];
+		
+		nums[0] = 5;
 
-		DataInputStream input = connection.openDataInputStream();
-		DataOutputStream output = connection.openDataOutputStream();
-
+		output.write(nums);
+		
+		output.close();
+		input.close();
+		connection.close();
+	}
+	
+	//demo code from class
+	public static void demo() throws Exception {
 		System.out.println("Sending data");
 
 		int cnt = 0;
@@ -37,13 +50,15 @@ public class Send { // This is the sender
 			System.out.println("Read: " + r[0] + r[1] + r[2] + r[3] + r[4] + r[5] + r[6] + r[7]);
 		}
 		System.out.println("All data sent");
-		// Delay.msDelay(1000);
-
-		output.close();
-		input.close();
-		connection.close();
-
-		System.out.println("Connection closed now");
+	}
+	
+	//assigns values for global variables (connections and input/output)
+	public static void initialize() {
+		connector = Bluetooth.getNXTCommConnector();
+		connection = connector.connect("00:16:53:44:66:05", NXTConnection.RAW);
+		input = connection.openDataInputStream();
+		output = connection.openDataOutputStream();
+		
 	}
 
 }

@@ -7,16 +7,27 @@ import lejos.remote.nxt.NXTConnection;
 import lejos.utility.Delay;
 
 public class Recieve {
+	
+	//connection setup
+	public static NXTCommConnector connector;
+	public static NXTConnection connection;
+	
+	//input/output streams
+	public static DataInputStream input;
+	public static DataOutputStream output;
 
 	public static void main(String[] args) throws Exception {
 		
-		NXTCommConnector connector = Bluetooth.getNXTCommConnector();
-		System.out.println("Waiting for connection ...");
-		NXTConnection connection = connector.waitForConnection(0, NXTConnection.RAW);
-		System.out.println("Connected");
+		initialize();
 		
-		DataInputStream input = connection.openDataInputStream();
-		DataOutputStream output = connection.openDataOutputStream();
+		byte[] numsRead = new byte[1];
+		
+		System.out.println(numsRead[0]);
+
+	}
+	
+	//demo code from class
+	public static void demo() throws Exception {
 		
 		byte[] n = new byte[8];
 		
@@ -38,7 +49,15 @@ public class Recieve {
 		input.close();
 		output.close();
 		connection.close();
-
+		
+	}
+	
+	//assigns values for global variables (connections and input/output)
+	public static void initialize() {
+		connector = Bluetooth.getNXTCommConnector();
+		connection = connector.waitForConnection(0, NXTConnection.RAW);
+		input = connection.openDataInputStream();
+		output = connection.openDataOutputStream();
 	}
 
 }
