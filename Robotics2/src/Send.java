@@ -25,6 +25,7 @@ public class Send {
 		SensorValue();
 		NXTCommConnector connector = Bluetooth.getNXTCommConnector();
 		NXTConnection connection = connector.connect("00:16:53:44:66:05", NXTConnection.RAW);
+<<<<<<< HEAD
 
 		connector.waitForConnection(0, NXTConnection.RAW);
 
@@ -39,6 +40,22 @@ public class Send {
 
 		//comm(output);
 
+=======
+		
+		connector.waitForConnection(0, NXTConnection.RAW);
+		
+		DataOutputStream output = connection.openDataOutputStream();
+		DataInputStream input = connection.openDataInputStream();
+		
+		byte[] nums = new byte[1];
+		nums[0] = 15;
+		
+		output.write(nums);
+		output.flush();
+		
+		//comm(output);
+		
+>>>>>>> parent of 430e996... put stuff back into comm()
 		Button.waitForAnyPress();
 
 		output.close();
@@ -69,6 +86,7 @@ public class Send {
 	//function to test output passing
 
 	public static void comm(DataOutputStream output) throws Exception {
+<<<<<<< HEAD
 
 		System.out.println("before output");
 		while(Button.getButtons() != Button.ID_ESCAPE);
@@ -77,6 +95,16 @@ public class Send {
 		byte[] nums = new byte[1];
 		nums[0] = 15;
 
+=======
+		
+		System.out.println("before output");
+		while(Button.getButtons() != Button.ID_ESCAPE);
+		//output = connection.openDataOutputStream();
+		
+		byte[] nums = new byte[1];
+		nums[0] = 15;
+		
+>>>>>>> parent of 430e996... put stuff back into comm()
 		output.write(nums);
 		output.flush();
 
