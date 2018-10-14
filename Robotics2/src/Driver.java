@@ -3,7 +3,6 @@ import java.io.DataOutputStream;
 import lejos.hardware.Bluetooth;
 import lejos.hardware.Button;
 import lejos.hardware.ev3.LocalEV3;
-import lejos.hardware.lcd.LCD;
 import lejos.hardware.port.Port;
 import lejos.hardware.sensor.MindsensorsAbsoluteIMU;
 import lejos.hardware.sensor.SensorMode;
@@ -38,7 +37,7 @@ public class Driver {
 		//fetches data from the sensor and stores it in sample
 		gyroprovider.fetchSample(sample, 0);
 		
-		//condiional logic for which value should be passed to the data stream
+		//conditional logic for which value should be passed to the data stream
 		if(sample[0] < -threshold)		//forward
 			data[0] = 0;
 		else if (sample[0] > threshold)	//backward
