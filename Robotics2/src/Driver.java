@@ -34,6 +34,8 @@ public class Driver {
 		// main loop of the program, exits when escape button is pressed
 		while(Button.getButtons() != Button.ID_ESCAPE) {
 			
+			byte temp = data[0];
+			
 		//fetches data from the sensor and stores it in sample
 		gyroprovider.fetchSample(sample, 0);
 		
@@ -47,8 +49,9 @@ public class Driver {
 		else if (sample[1] < -threshold)//right
 			data[0] = 3;
 		
-		//writes the data variable to the stream
-		output.write(data);
+		//writes the data variable to the stream if it changed
+		if(data[0] != temp)
+			output.write(data);
 		
 		}
 		
