@@ -34,6 +34,7 @@ public class Driver {
 		// main loop of the program, exits when escape button is pressed
 		while(Button.getButtons() != Button.ID_ESCAPE) {
 			
+			//variable that's used to determine if the acceleartion state has changed from the previous loop
 			byte temp = data[0];
 			
 		//fetches data from the sensor and stores it in sample
@@ -52,10 +53,11 @@ public class Driver {
 		//writes the data variable to the stream if it changed
 		if(data[0] != temp)
 			output.write(data);
-		
+			output.flush();
 		}
 		
 		gyro.close();
+		
 
 	}
 

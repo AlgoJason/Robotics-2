@@ -27,9 +27,10 @@ public class DriverR {
 			byte temp = data[0];
 			input.read(data);
 			
-			//conditional logic from sender that determines behavior
+			//only run this block if the data in the stream has changed
 			if(temp != data[0]) {
 				
+				//conditional logic from sender that determines behavior
 				if(data[0] == 0)		//forward
 					forward();
 				else if (data[0] == 1)	//backward
